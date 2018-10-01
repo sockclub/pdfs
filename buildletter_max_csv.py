@@ -28,10 +28,10 @@ for row in names:
         print len(row)
         if unicode(row[4], 'utf-8', errors='ignore') != 'null':
             toname = unicode(row[4], 'utf-8', errors='ignore')
-        if unicode(row[21], 'utf-8', errors='ignore') != 'null' and unicode(row[21], 'utf-8', errors='ignore') != '#N/A' and unicode(row[21], 'utf-8', errors='ignore') != '0':
-            fromname = unicode(row[21], 'utf-8', errors='ignore')
-        if unicode(row[22], 'utf-8', errors='ignore') != 'null' and unicode(row[22], 'utf-8', errors='ignore') != '#N/A' and unicode(row[22], 'utf-8', errors='ignore') != '0':
-            message = unicode(row[22], 'utf-8', errors='ignore')
+        if unicode(row[16], 'utf-8', errors='ignore') != 'null':
+            fromname = unicode(row[16], 'utf-8', errors='ignore')
+        if unicode(row[17], 'utf-8', errors='ignore') != 'null':
+            message = unicode(row[17], 'utf-8', errors='ignore')
         if row[18] == 'small':
             size = "S"
         if row[18] == 'large':

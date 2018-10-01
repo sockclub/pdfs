@@ -26,22 +26,22 @@ for row in names:
         gender = "M"
         print row
         print len(row)
-        if unicode(row[4], 'utf-8', errors='ignore') != 'null':
-            toname = unicode(row[4], 'utf-8', errors='ignore')
-        if unicode(row[21], 'utf-8', errors='ignore') != 'null' and unicode(row[21], 'utf-8', errors='ignore') != '#N/A' and unicode(row[21], 'utf-8', errors='ignore') != '0':
-            fromname = unicode(row[21], 'utf-8', errors='ignore')
-        if unicode(row[22], 'utf-8', errors='ignore') != 'null' and unicode(row[22], 'utf-8', errors='ignore') != '#N/A' and unicode(row[22], 'utf-8', errors='ignore') != '0':
-            message = unicode(row[22], 'utf-8', errors='ignore')
-        if row[18] == 'small':
+        if unicode(row[3], 'utf-8', errors='ignore') != 'null':
+            toname = unicode(row[3], 'utf-8', errors='ignore')
+        if unicode(row[20], 'utf-8', errors='ignore') != 'null':
+            fromname = unicode(row[20], 'utf-8', errors='ignore')
+        if unicode(row[21], 'utf-8', errors='ignore') != 'null':
+            message = unicode(row[21], 'utf-8', errors='ignore')
+        if row[17] == 'small':
             size = "S"
-        if row[18] == 'large':
+        if row[17] == 'large':
             size = "L"
-        if row[18] == 'youth':
+        if row[17] == 'youth':
             size = "Y"
 
-        if row[19] == "adult_female":
+        if row[18] == "adult_female":
             gender = "F"
-        if row[19] == "kid_female":
+        if row[18] == "kid_female":
             gender = "F"
 
         filename = "{0:05d}".format(count)
