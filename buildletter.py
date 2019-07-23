@@ -8,8 +8,8 @@ import codecs
 import sys
 
 names = csv.reader(open(sys.argv[1], 'rU'))
-regtmpl = unicode(open("reg.mustache", "r").read().decode('utf-8'))
-gifttmpl = unicode(open("gift.mustache", "r").read().decode('utf-8'))
+regtmpl = str(open("reg.mustache", "r").read())
+gifttmpl = str(open("gift.mustache", "r").read())
 
 count = 0
 gc = 0
@@ -24,14 +24,14 @@ for row in names:
         message = ""
         size = "M"
         gender = "M"
-        print row
-        print len(row)
-        if unicode(row[4], 'utf-8', errors='ignore') != 'null':
-            toname = unicode(row[4], 'utf-8', errors='ignore')
-        if unicode(row[21], 'utf-8', errors='ignore') != 'null' and unicode(row[21], 'utf-8', errors='ignore') != '#N/A' and unicode(row[21], 'utf-8', errors='ignore') != '0':
-            fromname = unicode(row[21], 'utf-8', errors='ignore')
-        if unicode(row[22], 'utf-8', errors='ignore') != 'null' and unicode(row[22], 'utf-8', errors='ignore') != '#N/A' and unicode(row[22], 'utf-8', errors='ignore') != '0':
-            message = unicode(row[22], 'utf-8', errors='ignore')
+        print(row)
+        print(len(row))
+        if str(row[4]) != 'null':
+            toname = str(row[4])
+        if str(row[21]) != 'null' and str(row[21]) != '#N/A' and str(row[21]) != '0':
+            fromname = str(row[21])
+        if str(row[22]) != 'null' and str(row[22]) != '#N/A' and str(row[22]) != '0':
+            message = str(row[22])
         if row[18] == 'small':
             size = "S"
         if row[18] == 'large':
@@ -48,7 +48,7 @@ for row in names:
         context = {'ToName': toname, 'FromName': fromname,
                    'MESSAGE': message, 'Size': size, 'Gender': gender}
         if message:
-            giftout = pystache.render(gifttmpl, context).encode('utf-8')
+            giftout = str(pystache.render(gifttmpl, context))
             f = open((filename + ".html"), 'w')
             f.write(giftout)
             f.close()
@@ -57,7 +57,7 @@ for row in names:
             # os.system(cmd)
             gc = gc + 1
         else:
-            regout = pystache.render(regtmpl, context).encode('utf-8')
+            regout = str(pystache.render(regtmpl, context))
             f = open((filename + ".html"), 'w')
             f.write(regout)
             f.close()
