@@ -67,5 +67,6 @@ for row in names:
     count = count + 1
 
 
-cmd = "wkhtmltopdf --zoom 3.5 *.html %s.pdf" % (csvname)
+cmd = "/usr/local/bin/wkhtmltopdf --enable-local-file-access *.html %s.pdf" % (
+    csvname)
 os.system(cmd)
