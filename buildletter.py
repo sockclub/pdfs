@@ -2,9 +2,7 @@
 
 import csv
 import os
-import re
 import pystache
-import codecs
 import sys
 
 
@@ -20,6 +18,9 @@ csvname = sys.argv[1].split(".")[0]
 
 def remove_non_ascii(text):
     return text.encode("ascii", "ignore").decode()
+
+if not os.path.exists("generated_pdfs/"):
+    os.makedirs("generated_pdfs/")
 
 for row in names:
     if count > stop:
