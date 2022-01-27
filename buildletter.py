@@ -100,7 +100,6 @@ def merge_pdfs(pdf_name):
     from PyPDF2 import PdfFileMerger, PdfFileReader
     merger = PdfFileMerger()
     for file in os.listdir("generated_pdfs/"):
-        print(file)
         if file.endswith(".pdf") and os.path.exists("generated_pdfs/" + file):
             input = PdfFileReader(open("generated_pdfs/" + file, "rb"))
             merger.append(input, import_bookmarks=False)
@@ -108,6 +107,22 @@ def merge_pdfs(pdf_name):
         os.makedirs("merged_pdfs/")
     merger.write(open("merged_pdfs/" + pdf_name + ".pdf", "wb"))
     print("Merged PDFs at " + pdf_name + ".pdf")
+    remove_blank_pages(pdf_name)
+
+def remove_blank_pages(pdf_name):
+    from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
+    import pdfplumber
+    pdfReader = PdfFileReader(open("merged_pdfs/" + pdf_name + ".pdf", "rb"))
+    PdfFileWriter = PdfFileWriter()
+    with pdfplumber.open("merged_pdfs/" + pdf_name + ".pdf") as plumber:
+        for page in range(pdfReader.getNumPages()):
+            if len(plumber.pages[page].chars) > 0: 
+                PdfFileWriter.addPage(pdfReader.getPage(page))
+                print('added page')
+    if not os.path.exists("final_pdfs/"):
+        os.makedirs("final_pdfs/")
+    PdfFileWriter.write(open("final_pdfs/" + pdf_name + ".pdf", "wb"))
+    print("Removed blank pages at " + pdf_name + ".pdf")
 
 def remove_junk(): 
     for file in os.listdir("generated_pdfs/"):
