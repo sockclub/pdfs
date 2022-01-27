@@ -2,3 +2,4 @@ venv/*
 *.html
 *.pdf
 *.csv
+__pycache__
