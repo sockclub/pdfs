@@ -140,6 +140,9 @@ def make_csv(dict_list):
     """
     Takes a list of dictionaries and writes them to a CSV file
     """
+    if len(dict_list) == 1:
+        # if there's no actual orders just return so we don't explode with some list index error
+        return 
     column_names = dict_list[1].keys()
     csv_name = "csv/{size_code}_{first_row}_{last_row}_{country_code}.csv".format(
         size_code=dict_list[0]["size_code"],

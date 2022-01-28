@@ -124,7 +124,7 @@ def remove_blank_pages(pdf_name):
     PdfFileWriter.write(open("final_pdfs/" + pdf_name + ".pdf", "wb"))
     print("Removed blank pages at " + pdf_name + ".pdf")
 
-def remove_junk(): 
+def remove_pdfs(): 
     for file in os.listdir("generated_pdfs/"):
         if file.endswith(".pdf") and file.startswith("0"):
             os.remove("generated_pdfs/" + file)
@@ -145,6 +145,7 @@ if __name__ == "__main__":
             if file.endswith(".csv"):
                 build_letters(file)
                 merge_pdfs(file.replace(".csv", ""))
-                remove_junk()
+                remove_pdfs()
+
     else:
        "Didn't get a csv file path. Use --filepath to specify a csv file. Ex: 'python buildletter.py --name=example.csv'" 
