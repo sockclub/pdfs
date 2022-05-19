@@ -142,9 +142,9 @@ def make_csv(dict_list):
     """
     if len(dict_list) == 1:
         # if there's no actual orders just return so we don't explode with some list index error
-        return 
+        return
     column_names = dict_list[1].keys()
-    csv_name = "csv/{size_code}_{first_row}_{last_row}_{country_code}.csv".format(
+    csv_name = "csv/{size_code}_{country_code}.csv".format(
         size_code=dict_list[0]["size_code"],
         first_row=dict_list[0]["start_row"],
         last_row=dict_list[0]["end_row"],
@@ -160,35 +160,13 @@ def make_csv(dict_list):
             writer.writerow(row)
     print(csv_name)
 
-def split(csv_name): 
+
+def split(csv_name):
     csv_dict = parse_csv_to_dict(csv_name)
-    (
-        FL_INTL,
-        FL_US,
-        FM_INTL,
-        FM_US,
-        FS_INTL,
-        FS_US,
-        ML_INTL,
-        ML_US,
-        MM_INTL,
-        MM_US,
-        MS_INTL,
-        MS_US,
-    ) = parse_dict(csv_dict)
-    print('Created CSVs: ')
-    make_csv(FL_INTL)
-    make_csv(FL_US)
-    make_csv(FM_INTL)
-    make_csv(FM_US)
-    make_csv(FS_INTL)
-    make_csv(FS_US)
-    make_csv(ML_INTL)
-    make_csv(ML_US)
-    make_csv(MM_INTL)
-    make_csv(MM_US)
-    make_csv(MS_INTL)
-    make_csv(MS_US)
+    print("Created CSVs: ")
+    for dict_list in parse_dict(csv_dict):
+        make_csv(dict_list)
+
 
 if __name__ == "__main__":
     split(sys.argv[1])
