@@ -6,11 +6,12 @@ import os
 import pystache
 import sys
 from split_csv import parse_csv_to_dict
-import inflection 
+import inflection
 
 
 def remove_non_ascii(text):
     return text.encode("ascii", "ignore").decode()
+
 
 def builder(file=None):
     csv_dict = parse_csv_to_dict(file)
@@ -45,9 +46,9 @@ def builder(file=None):
             gender = "F"
         elif row["Sub type"] == "kid_female":
             gender = "F"
-        elif row["Sub type"] == "adult_male": 
+        elif row["Sub type"] == "adult_male":
             gender = "M"
-        elif row["Sub type"] == "kid_male": 
+        elif row["Sub type"] == "kid_male":
             gender = "M"
 
         # if the message is blank, generate regular html doc with no gift message
@@ -63,19 +64,22 @@ def builder(file=None):
                 },
             )
         )
-        master_file_name = file.replace(".csv","").replace("csv/", "")
+        master_file_name = file.replace(".csv", "").replace("csv/", "")
         print(master_file_name)
-        append_html_string_to_pdf(html_str, inflection.parameterize(to_name), master_file_name)
-    
+        append_html_string_to_pdf(
+            html_str, inflection.parameterize(to_name), master_file_name
+        )
+
 
 def append_html_string_to_pdf(html_str, temp_file_name, master_file_name="master"):
     from PyPDF2 import PdfFileMerger, PdfFileReader
+
     # write the html to a file
     f = open(("htmls/" + temp_file_name + ".html"), "w")
     f.write(html_str)
     f.close()
 
-    # if the master pdf doesn't exist yet, create it and return 
+    # if the master pdf doesn't exist yet, create it and return
     if not os.path.exists("merged_pdfs/" + master_file_name + ".pdf"):
         os.system(
             "/usr/local/bin/wkhtmltopdf --enable-local-file-access htmls/"
@@ -84,9 +88,9 @@ def append_html_string_to_pdf(html_str, temp_file_name, master_file_name="master
             + master_file_name
             + ".pdf"
         )
-        return 
+        return
 
-    # if the master pdf exists, make a new pdf from the html 
+    # if the master pdf exists, make a new pdf from the html
     os.system(
         "/usr/local/bin/wkhtmltopdf --enable-local-file-access htmls/"
         + temp_file_name
@@ -97,8 +101,14 @@ def append_html_string_to_pdf(html_str, temp_file_name, master_file_name="master
 
     # merge the new pdf with the master pdf
     merger = PdfFileMerger()
-    merger.append(PdfFileReader(open("merged_pdfs/" + master_file_name + ".pdf", "rb")), import_bookmarks=False)
-    merger.append(PdfFileReader(open("generated_pdfs/" + temp_file_name + ".pdf", "rb")), import_bookmarks=False)
+    merger.append(
+        PdfFileReader(open("merged_pdfs/" + master_file_name + ".pdf", "rb")),
+        import_bookmarks=False,
+    )
+    merger.append(
+        PdfFileReader(open("generated_pdfs/" + temp_file_name + ".pdf", "rb")),
+        import_bookmarks=False,
+    )
     merger.write(open("merged_pdfs/" + master_file_name + ".pdf", "wb"))
     print("Appended " + temp_file_name + " to merged_pdfs/" + master_file_name + ".pdf")
 
@@ -156,9 +166,9 @@ if __name__ == "__main__":
         split(args.filepath)
         for file in os.listdir("csv/"):
             if file.endswith(".csv"):
-              builder("csv/" + file)
-              remove_blank_pages(file.replace(".csv",""))
-              remove_pdfs()
+                builder("csv/" + file)
+                remove_blank_pages(file.replace(".csv", ""))
+                remove_pdfs()
 
     else:
         "Didn't get a csv file path. Use --filepath to specify a csv file. Ex: 'python buildletter.py --name=example.csv'"
